@@ -1,0 +1,36 @@
+server:
+  port: 8080
+
+spring:
+  config:
+    import: optional:file:.env[.properties] # 환경변수 파일 로드
+  output:
+    ansi:
+      enabled: always # ANSI 콘솔 색상 활성화 (JUnit 테스트 포함)
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/post?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+    username: post
+    password: post
+
+
+  jpa:
+    open-in-view: false # controller 에서 지연로딩을 사용할 때 false로 설정
+    hibernate:
+      ddl-auto: update # 테이블 생성 및 업데이트 전략 (create, create-drop, update, validate, none)
+    properties:
+      hibernate:
+        format_sql: true # SQL 포맷팅
+        highlight_sql: true # 하이라이트 SQL 출력
+        use_sql_comments: true # 실제 JPQL SQL 주석 사용
+
+
+logging:
+  level:
+    #    org.springframework.security.web: trace
+    #    org.hibernate: info # Hibernate의 로그 레벨을 info로 설정
+    org.hibernate.SQL: debug # Hibernate의 SQL을 출력
+    org.hibernate.orm.jdbc.bind: trace # Hibernate의 SQL 바인딩을 출력
+    org.hibernate.orm.jdbc.extract: trace # Hibernate의 SQL 바인딩을 출력
+    org.springframework.transaction.interceptor: trace # Hibernate의 SQL 바인딩을 출력
