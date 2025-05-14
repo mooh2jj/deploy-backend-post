@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     env:
       REPOSITORY_NAME: deploy-backend-post
@@ -29,6 +29,27 @@ jobs:
         run: |
           chmod +x ./gradlew
           ./gradlew clean build
+
+      - name: 빌드 결과물 업로드
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: |
+            build/libs
+            .env
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      REPOSITORY_NAME: deploy-backend-post
+
+    steps:
+      - name: 빌드 결과물 다운로드
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+          path: .
 
       - name: EC2 디렉토리 권한 설정
         uses: appleboy/ssh-action@v1.0.3
