@@ -30,6 +30,17 @@ jobs:
           chmod +x ./gradlew
           ./gradlew clean build
 
+      - name: EC2 디렉토리 권한 설정
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
+            mkdir -p /home/ubuntu/${{ env.REPOSITORY_NAME }}
+            sudo chown -R ubuntu:ubuntu /home/ubuntu/${{ env.REPOSITORY_NAME }}
+            sudo chmod -R 775 /home/ubuntu/${{ env.REPOSITORY_NAME }}
+
       - name: EC2에 JAR 파일 및 설정 파일 전송
         uses: appleboy/scp-action@master
         with:
