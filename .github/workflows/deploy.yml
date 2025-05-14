@@ -18,8 +18,8 @@ jobs:
       - name: JDK 설정
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
-          java-version: '21'
+          distribution: "temurin"
+          java-version: "21"
 
       - name: Create .env file
         run: |
@@ -39,6 +39,7 @@ jobs:
           source: "build/libs/*SNAPSHOT.jar,.env"
           target: "/home/ubuntu/${{ env.REPOSITORY_NAME }}"
           strip_components: 0
+          overwrite: true
 
       - name: SSH로 EC2에 접속하여 애플리케이션 실행
         uses: appleboy/ssh-action@v1.0.3
@@ -50,7 +51,7 @@ jobs:
           script: |
             cd /home/ubuntu/${{ env.REPOSITORY_NAME }}
             sudo chown -R ubuntu:ubuntu .
-            
+
             # 파일 이동
             sudo mv .env /home/ubuntu/${{ env.REPOSITORY_NAME }}/.env
 
