@@ -80,6 +80,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script_stop: true
+          timeout: 60s
           script: |
             cd /home/ubuntu/${{ env.REPOSITORY_NAME }}
             sudo chown -R ubuntu:ubuntu .
@@ -87,5 +88,6 @@ jobs:
             # 이미 애플리케이션 중지
             sudo fuser -k -n tcp 8080 || true
 
-            # 애플리케이션 실행
-            nohup java -jar build/libs/*SNAPSHOT.jar 2>&1 &
+            # 애플리케이션 백그라운드로 실행하고 즉시 종료
+            nohup java -jar build/libs/*SNAPSHOT.jar > app.log 2>&1 </dev/null & disown
+            echo "애플리케이션이 백그라운드에서 실행되었습니다."
