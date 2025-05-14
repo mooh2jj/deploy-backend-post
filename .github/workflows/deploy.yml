@@ -63,8 +63,8 @@ jobs:
             cd /home/ubuntu/${{ env.REPOSITORY_NAME }}
             sudo chown -R ubuntu:ubuntu .
 
-            # 파일 이동
-            sudo mv .env /home/ubuntu/${{ env.REPOSITORY_NAME }}/.env
-
+            # 이미 애플리케이션 중지
             sudo fuser -k -n tcp 8080 || true
+
+            # 애플리케이션 실행
             nohup java -jar build/libs/*SNAPSHOT.jar 2>&1 &
