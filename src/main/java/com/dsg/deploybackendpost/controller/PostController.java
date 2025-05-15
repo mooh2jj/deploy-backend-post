@@ -3,6 +3,7 @@ package com.dsg.deploybackendpost.controller;
 import com.dsg.deploybackendpost.dto.PostDto;
 import com.dsg.deploybackendpost.entity.Post;
 import com.dsg.deploybackendpost.repository.PostRepository;
+import com.dsg.deploybackendpost.service.PostService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,15 +21,10 @@ import java.util.List;
 @RestController
 public class PostController {
 
-    private final PostRepository postRepository;
+    private final PostService postService;
 
     @GetMapping
     public ResponseEntity<List<PostDto>> getPosts() {
-        return new ResponseEntity<>(
-                postRepository.findAll().stream()
-                        .map(PostDto::from)
-                        .toList(),
-                HttpStatus.OK
-        );
+        return new ResponseEntity<>(postService.getPosts(), HttpStatus.OK);
     }
 }
