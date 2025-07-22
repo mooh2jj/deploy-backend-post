@@ -14,9 +14,7 @@ services:
     ports:
       - "3307:3306"                               # 호스트 포트 3307 -> 컨테이너 포트 3306
     volumes:
-      - ./mysql/data:/var/lib/mysql               # 데이터 퍼시스턴스를 위한 볼륨
       - ./mysql/conf.d:/etc/mysql/conf.d          # MySQL 설정 파일
-      - ./mysql/initdb:/docker-entrypoint-initdb.d # 초기화 SQL 스크립트
     command: [
       "--character-set-server=utf8mb4",           # 문자 셋 설정
       "--collation-server=utf8mb4_general_ci"     # 문자 정렬 설정
