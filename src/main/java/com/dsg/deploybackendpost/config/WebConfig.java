@@ -1,16 +1,21 @@
 package com.dsg.deploybackendpost.config;
 
+import com.dsg.deploybackendpost.props.CorsAllowedOriginsProps;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
+@RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
+
+    private final CorsAllowedOriginsProps props;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000", "http://52.79.123.55:3000", "https://dsgpost.link", "https://www.dsgpost.link") // Next.js 기본 포트
+                .allowedOrigins(props.getAllowedOrigins().toArray(new String[0])) // 프론트 허용 주소 설정
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                 .allowedHeaders("*")
                 .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials")
