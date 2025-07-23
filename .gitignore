@@ -36,6 +36,9 @@ out/
 ### VS Code ###
 .vscode/
 
+##.github/
+/.github/instructions/
+
 ## DS_Store
 .DS_Store
 
@@ -44,5 +47,6 @@ out/
 
 ## .env
 /.env
+
 
 
