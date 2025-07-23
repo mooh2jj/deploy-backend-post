@@ -1,10 +1,13 @@
 package com.dsg.deploybackendpost.entity;
 
+import com.dsg.deploybackendpost.dto.PostRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -22,8 +25,16 @@ public class Post extends BaseTimeEntity {
     @Column(name = "content", nullable = false)
     private String content;
 
-    public Post(String title, String content) {
-        this.title = title;
-        this.content = content;
+
+    public static Post of(PostRequest request) {
+        return Post.builder()
+                .title(request.getTitle())
+                .content(request.getContent())
+                .build();
+    }
+
+    public void update(PostRequest request) {
+        this.title = request.getTitle();
+        this.content = request.getContent();
     }
 }
