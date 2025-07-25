@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: "temurin"
-          java-version: "21"
+          java-version: "17"
 
       - name: Create .env file
         run: |
@@ -28,7 +28,7 @@ jobs:
       - name: Gradle로 빌드하기
         run: |
           chmod +x ./gradlew
-          ./gradlew clean build -x test
+          ./gradlew clean build
 
       - name: 빌드 결과물 업로드
         uses: actions/upload-artifact@v4
@@ -59,7 +59,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: "temurin"
-          java-version: "21"
+          java-version: "17"
 
       - name: 테스트 실행
         run: |
